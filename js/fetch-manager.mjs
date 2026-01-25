@@ -1,19 +1,17 @@
-const langFile = "/data/languages.json";
+const langFile = '/data/languages.json';
+const langURL = 'https://restcountries.com/v3.1/lang/';
 
-async function getLanguageData(lang) {
+const fetchData = async function (path) {
   try {
-    const response = await fetch(lang);
+    const response = await fetch(path);
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
     const result = await response.json();
     return result;
-
-    return result;
   } catch (error) {
     console.error(error.message);
   }
-}
+};
 
-const languages = await getLanguageData(langFile);
-export { languages };
+export { fetchData, langFile, langURL };

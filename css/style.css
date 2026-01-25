@@ -33,13 +33,10 @@ svg {
 }
 
 svg path {
-  /* cursor: pointer; */
-  fill: #90d5ff;
-  filter: blur(0.5px);
+  cursor: pointer;
 }
 
-.ball {
-  /* border-radius: 50%; */
+.box {
   position: absolute;
   cursor: pointer;
   border: 0.5px solid rgb(158, 47, 35);
@@ -47,9 +44,10 @@ svg path {
   align-items: center;
   justify-content: center;
   text-transform: lowercase;
+  font-size: 0.85rem;
 }
 
-.ball:hover {
+.box:hover {
   animation: tilt-shaking 0.25s infinite;
 }
 
@@ -70,21 +68,3 @@ svg path {
     transform: rotate(0deg);
   }
 }
-
-/* @keyframes tilt-n-move-shaking {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  25% {
-    transform: translate(5px, 5px) rotate(5deg);
-  }
-  50% {
-    transform: translate(0, 0) rotate(0eg);
-  }
-  75% {
-    transform: translate(-5px, 5px) rotate(-5deg);
-  }
-  100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-} */
