@@ -24,11 +24,11 @@ worldMap.addEventListener('click', showLanguageNodes);
 
 let currentlyHovered;
 
-const countryWrapper = document.querySelector('.card2');
-const countryNameEL = document.querySelector('.card2-title');
-const countryImg = document.querySelector('.card2').querySelector('img');
-const countryRegionEL = document.querySelector('.card2-description');
-const languagesSpokenEl = document.querySelector('.details');
+const countryWrapper = document.querySelector('.country-card');
+const countryNameEL = document.querySelector('.country-card-title');
+const countryImg = document.querySelector('.country-card').querySelector('img');
+const countryRegionEL = document.querySelector('.country-card-region');
+const languagesSpokenEl = document.querySelector('.country-card-languages');
 
 worldMap.addEventListener('mouseover', function (e) {
   if (e.target.tagName !== 'path' || !arr) {
@@ -70,6 +70,6 @@ worldMap.addEventListener('mouseout', function (e) {
     return;
   }
 
-  const card = document.querySelector('.card2');
+  const card = document.querySelector('.country-card');
   card.style.visibility = 'hidden';
 });

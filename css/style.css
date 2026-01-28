@@ -51,7 +51,7 @@ svg path {
   animation: tilt-shaking 0.25s infinite;
 }
 
-.card2 {
+.country-card {
   width: 180px;
   /* height: 264px; */
   padding: 6px;
@@ -64,33 +64,28 @@ svg path {
   visibility: hidden;
 }
 
-.card2 .card2-title,
-.card2 .writer {
+.country-card .country-card-title {
   color: black;
 }
 
-.card2 .card2-title {
+.country-card .country-card-title {
   font-size: 22px;
   font-weight: bold;
   padding: 9px 7px 0;
 }
 
-.card2 .card2-description {
+.country-card .country-card-region {
   padding: 7px;
   font-size: 13px;
 }
 
-.card2 .writer {
-  font-weight: 800;
-}
-
-.card2 img {
+.country-card img {
   width: 100%;
   height: 130px;
   background-color: rgb(236, 236, 236);
 }
 
-.card2 .details {
+.country-card .country-card-languages {
   color: gray;
   font-size: 11px;
   padding: 11px 0 7px 7px;
@@ -99,7 +94,7 @@ svg path {
   gap: 2px;
 }
 
-.card2 img:hover {
+.country-card img:hover {
   transform: scale(0.98);
 }
 

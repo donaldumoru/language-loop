@@ -35,14 +35,14 @@ class countryInfo {
 
 const makeCountryCard = function () {
   const html = `
-      <div class="card2">
+      <div class="country-card">
         <img
           src=""
           alt=""
         />
-        <div class="card2-title"></div>
-        <div class="card2-description"></div>
-        <div class="details"></div>
+        <div class="country-card-title"></div>
+        <div class="country-card-region"></div>
+        <div class="country-card-languages"></div>
       </div>`;
 
   const main = document.querySelector('main');
