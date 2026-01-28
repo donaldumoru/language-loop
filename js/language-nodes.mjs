@@ -1,13 +1,10 @@
 import { Box, randomNumber } from './utils.mjs';
 import { fetchData, langFile, langURL } from './fetch-manager.mjs';
 
-const languages = await fetchData(langFile);
-
 const buildLanguageBoxes = function () {
   const boxArr = [];
   const map = document.querySelector('main');
   const rect = map.getBoundingClientRect();
-  //   const boxSize = 100;
 
   const getRandomPosition = boxSize => ({
     x: randomNumber(0, rect.width - boxSize),
@@ -21,28 +18,28 @@ const buildLanguageBoxes = function () {
         Math.abs(el.y - randomY) < boxSize,
     );
 
-  const createBox = (randomX, randomY, size) => {
-    return new Box(randomX, randomY, 'rgb(255,255,255)', size);
+  const createBox = (randomX, randomY, languageCode, color, size) => {
+    return new Box(randomX, randomY, languageCode, color, size);
   };
 
-  const makeBoxSize = numCountries => {
-    //Logic here and replace the boxSize in uniquePosition to use the returned value from here
-    return randomNumber(100, 200);
-  };
+  //   const makeBoxSize = numCountries => {
+  //     //Logic here and replace the boxSize in uniquePosition to use the returned value from here
+  //     return randomNumber(100, 200);
+  //   };
 
-  return function placeLanguageBox(language, i) {
-    const boxSize = makeBoxSize();
+  return function placeLanguageNode(language) {
+    const boxSize = 100;
     const position = getRandomPosition(boxSize);
     const { x, y } = position;
     const isIntersecting = intersects(boxArr, x, y, boxSize);
     if (isIntersecting) {
-      return placeLanguageBox(language, i);
+      return placeLanguageNode(language);
     }
-    const box = createBox(x, y, boxSize);
+
+    const box = createBox(x, y, language, 'rgb(255,255,255)', boxSize);
     boxArr.push(box);
-    return boxArr;
+    return box;
   };
 };
 
-const placeLanguageNode = buildLanguageBoxes();
-export { placeLanguageNode };
+export { buildLanguageBoxes };

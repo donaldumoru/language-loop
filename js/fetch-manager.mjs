@@ -1,5 +1,6 @@
 const langFile = '/data/languages.json';
 const langURL = 'https://restcountries.com/v3.1/lang/';
+const ccaURL = 'https://restcountries.com/v3.1/alpha/';
 
 const fetchData = async function (path) {
   try {
@@ -14,4 +15,4 @@ const fetchData = async function (path) {
   }
 };
 
-export { fetchData, langFile, langURL };
+export { fetchData, langFile, langURL, ccaURL };

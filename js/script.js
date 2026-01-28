@@ -1,28 +1,18 @@
-// "use strict";
-
-import { randomNumber, randomColor, Box } from './utils.mjs';
-import { placeLanguageNode } from './language-nodes.mjs';
-import { fetchData, langFile, langURL } from './fetch-manager.mjs';
+import { randomColor, Box, setCountryFill } from './utils.mjs';
+import { ccaURL, fetchData, langFile, langURL } from './fetch-manager.mjs';
 import { setSVGViewBox, worldMap } from './map-manager.mjs';
 import { displayBoxes } from './ui/ui.mjs';
-
-const allCountries = document.querySelectorAll('path');
-allCountries.forEach(country => {
-  country.setAttribute('fill', '#90d5ff');
-  country.setAttribute('filter', 'blur(0.5px)');
-});
-
 setSVGViewBox();
-displayBoxes();
+
+const languages = await fetchData(langFile);
+const allCountries = document.querySelectorAll('path');
+const resetFillObj = { blur: 'blur(0.5px)' };
+setCountryFill(allCountries, resetFillObj);
+displayBoxes(languages);
 
 let viewing = false;
 
-const boxesContainer = document.querySelector('#languages');
-boxesContainer.addEventListener('click', async function (e) {
-  if (!e.target || !e.target.classList.contains('box')) {
-    return;
-  }
-
+const highlightCountries = async function (e) {
   viewing = true;
   const languageNode = e.target;
   const allBoxes = document.querySelectorAll('.box');
@@ -31,27 +21,48 @@ boxesContainer.addEventListener('click', async function (e) {
     const language = languageNode.getAttribute('data-name');
     const url = `${langURL}${language}`;
     const countries = await fetchData(url);
-    console.log(countries);
     const countryIDs = countries.map(country => country.cca2);
 
     const filtered = [...allCountries].filter(country =>
       countryIDs.some(id => id === country.id),
     );
 
-    allBoxes.forEach(box => (box.style.opacity = '0.2'));
+    setCountryFill(allCountries, resetFillObj);
+    setCountryFill(filtered, { color: randomColor, blur: 'blur(0px)' });
+    boxesContainer.innerHTML = '';
+  }
+};
 
-    filtered.forEach(path => {
-      path.setAttribute('fill', randomColor());
-      path.setAttribute('filter', 'blur(0px)');
-    });
+const boxesContainer = document.querySelector('#languages');
+boxesContainer.addEventListener('click', function (e) {
+  if (!e.target || !e.target.classList.contains('box')) {
+    return;
   }
 
-  languageNode.addEventListener('mouseleave', () => {
-    viewing = false;
-    allBoxes.forEach(box => (box.style.opacity = '1'));
-    allCountries.forEach(country => {
-      country.setAttribute('fill', '#90d5ff');
-      country.setAttribute('filter', 'blur(0.5px)');
-    });
-  });
+  highlightCountries(e);
+});
+
+worldMap.addEventListener('click', async function (e) {
+  if (e.target.tagName !== 'path') {
+    return;
+  }
+
+  const ccaCode = e.target.id;
+  if (!ccaCode) {
+    return;
+  }
+
+  const url = `${ccaURL}${ccaCode}`;
+  const [country] = await fetchData(url);
+
+  const languages = Object.entries(country.languages).reduce((acc, curr) => {
+    const [code, name] = curr;
+    const language = { code: code, name: name };
+    acc.push(language);
+    return acc;
+  }, []);
+
+  boxesContainer.innerHTML = '';
+  boxesContainer.style.visibility = 'visible';
+  displayBoxes(languages);
 });

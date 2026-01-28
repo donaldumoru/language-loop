@@ -1,5 +1,4 @@
-import { fetchData, langFile } from '../fetch-manager.mjs';
-import { placeLanguageNode } from '../language-nodes.mjs';
+import { buildLanguageBoxes } from '../language-nodes.mjs';
 
 const languageWrapper = document.querySelector('#languages');
 const rect = languageWrapper.getBoundingClientRect();
@@ -9,13 +8,13 @@ const renderBox = (box, lang, index) => {
   languageWrapper.insertAdjacentHTML('beforeend', html);
 };
 
-const languages = await fetchData(langFile);
-const displayBoxes = function () {
-  languages.forEach((language, i) => {
-    const boxes = placeLanguageNode();
-    const currentBox = boxes[i];
+const displayBoxes = function (arr) {
+  const placeLanguageNode = buildLanguageBoxes();
+  arr.forEach((language, i) => {
+    const { code } = language;
+    const box = placeLanguageNode(code);
     const { name } = language;
-    renderBox(currentBox, name, i + 1);
+    renderBox(box, name, i + 1);
   });
 };
 
