@@ -1,8 +1,8 @@
-import { Box, randomNumber } from './utils.mjs';
+import { languageNode, randomNumber } from './utils.mjs';
 import { fetchData, langFile, langURL } from './fetch-manager.mjs';
 
 const buildLanguageBoxes = function () {
-  const boxArr = [];
+  let boxArr = [];
   const map = document.querySelector('main');
   const rect = map.getBoundingClientRect();
 
@@ -19,7 +19,7 @@ const buildLanguageBoxes = function () {
     );
 
   const createBox = (randomX, randomY, languageCode, color, size) => {
-    return new Box(randomX, randomY, languageCode, color, size);
+    return new languageNode(randomX, randomY, languageCode, color, size);
   };
 
   //   const makeBoxSize = numCountries => {
@@ -36,9 +36,9 @@ const buildLanguageBoxes = function () {
       return placeLanguageNode(language);
     }
 
-    const box = createBox(x, y, language, 'rgb(255,255,255)', boxSize);
-    boxArr.push(box);
-    return box;
+    const languageNode = createBox(x, y, language, 'rgb(255,255,255)', boxSize);
+    boxArr = [...boxArr, languageNode];
+    return languageNode;
   };
 };
 
